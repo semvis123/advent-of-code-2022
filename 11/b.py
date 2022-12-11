@@ -12,8 +12,8 @@ def next_round(monkeys):
             item = monkey['items'].pop(0)
             
             new_item = monkey['operation'][1](
-                monkey['operation'][0] if monkey['operation'][0] != 'old' else item,
-                monkey['operation'][2] if monkey['operation'][2] != 'old' else item
+                item if isinstance(monkey['operation'][0], str) else monkey['operation'][0],
+                item if isinstance(monkey['operation'][2], str) else monkey['operation'][2]
             ) % lcm_all
             
             monkey_to_update = monkey[('if_false', 'if_true')[new_item % monkey['test'] == 0]]
@@ -24,5 +24,4 @@ def next_round(monkeys):
 for i in range(10_000):
     monkeys = next_round(monkeys)
 
-print(sorted(m['inspection'] for m in monkeys)[-2:])
 print(reduce(operator.mul, sorted(m['inspection'] for m in monkeys)[-2:], 1))
