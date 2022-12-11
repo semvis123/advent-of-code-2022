@@ -12,10 +12,10 @@ def next_round(monkeys):
         while len(monkey['items']) > 0:
             monkey['inspection'] = monkey.get('inspection', 0) + 1
             item = monkey['items'].pop(0)
-            new_item_str = monkey['operation'].replace('old', str(item))
-            new_item = operators[new_item_str.split()[1]](
-                int(new_item_str.split()[0]),
-                int(new_item_str.split()[2])
+
+            new_item = monkey['operation'][1](
+                item if isinstance(monkey['operation'][0], str) else monkey['operation'][0],
+                item if isinstance(monkey['operation'][2], str) else monkey['operation'][2]
             )
             
             new_item //= 3
